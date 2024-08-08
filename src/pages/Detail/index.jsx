@@ -3,32 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchCategory } from "../../features/categories/categoriesSlice";
 import { Spin, Alert } from "antd";
+import {useGetAllCategoriesQuery, useGetCategoryByIdQuery} from "../../services/categories.js";
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { data, errors, isLoading } = useGetCategoryByIdQuery(id);
   const { selectedCategory, status, error } = useSelector((state) => state.categories);
+
+  console.log(data)
 
   useEffect(() => {
     dispatch(fetchCategory(id));
   }, [dispatch, id]);
 
-  if (status === "loading") {
+  if (isLoading === true) {
     return <Spin />;
   }
-
-  if (status === "failed") {
-    return <Alert message={error} type="error" />;
-  }
-
-  if (!selectedCategory) {
+  if (!data) {
     return <p>No category found</p>;
   }
-
   return (
     <div>
-      <h1>{selectedCategory.name}</h1>
-      <p>{selectedCategory.description}</p>
+      <h1>{data.name}</h1>
+      <p>{data.description}</p>
     </div>
   );
 };

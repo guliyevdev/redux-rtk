@@ -22,7 +22,7 @@ const Categories = () => {
   const { data:categories, errors, isLoading } = useGetAllCategoriesQuery();
   const dispatch = useDispatch();
   const {
-    data: dd,
+    data,
     status,
     error,
     favorites,

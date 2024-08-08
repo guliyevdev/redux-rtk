@@ -94,7 +94,6 @@ const categoriesSlice = createSlice({
         state.basket.push(action.payload);
     },
     removeBasket: (state, action) => {
-          console.log(action)
       const id = action.payload
       const existingItem = state.basket.find((item) => item.id === id);
       if (existingItem) {
